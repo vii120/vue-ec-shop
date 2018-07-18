@@ -39,7 +39,9 @@
 		          </div>
 		          <div class="card-body">
 		            <h6 class="card-title mt-2">
-		              <a href="#" class="text-dark font-weight-bold">{{ item.title }}</a>
+		            	<router-link class="text-dark font-weight-bold" :to="`/product/${item.id}`">
+			            	{{ item.title }}
+			            </router-link>
 		            </h6>
 		            <p class="card-text">{{ item.content }}</p>
 		            <div class="h6 text-right" v-if="item.price">{{ item.price | currency }}</div>

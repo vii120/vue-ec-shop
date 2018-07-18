@@ -2,7 +2,7 @@
 	<div class="wrapper">
 		<!-- nav bar -->
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		  <router-link class="store-name" to="/">Weird Store</router-link>
+		  <router-link class="nav-item nav-link store-name" to="/">Weird Store</router-link>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 		  </button>
@@ -56,7 +56,7 @@
 		<!-- footer -->
 		<footer class="bg-light py-4 text-center">
 			<div class="container">
-		  <router-link class="store-name" to="/">Weird Store</router-link>
+		  <router-link class="nav-item nav-link store-name" to="/">Weird Store</router-link>
 		  <div class="h5">#BeingWeird</div>
 		  <div class="social-bar my-4">
 		  	<a href="#" class="nav-item text-dark"><i class="fab fa-facebook-square"></i></a>
