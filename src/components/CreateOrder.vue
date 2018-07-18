@@ -24,9 +24,9 @@
 				    	</div>
 				    </th>
 				    <th>商品</th>
-				    <th width=60>數量</th>
-				    <th min-width=60 v-if="cart.final_total!==cart.total">折扣價</th>
-				    <th min-width=60 v-else class="text-right">售價</th>
+				    <th>數量</th>
+				    <th v-if="cart.final_total!==cart.total">折扣價</th>
+				    <th v-else class="text-right">售價</th>
 				  </thead>
 
 				  <tbody>
