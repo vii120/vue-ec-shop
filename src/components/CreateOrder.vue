@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<loading :active.sync="isLoading"></loading>
 		<div class="row justify-content-center my-4">
 			<div class="col-md-10">
 				<!-- header -->
@@ -16,17 +17,22 @@
 			<div class="col-md-10">
 				<table class="table mt-4">
 				  <thead>
-				    <th></th>
+				    <th class="text-center" v-if="cart.carts.length!==0">
+				    	<div class="u-clear text-danger" @click="removeAll()">
+				    		<i class="far fa-trash-alt mr-1"></i>
+				    		<b class="d-none d-md-inline-block">全部清空</b>
+				    	</div>
+				    </th>
 				    <th>商品</th>
-				    <th>數量</th>
-				    <th v-if="cart.final_total!==cart.total">折扣價</th>
-				    <th v-else class="text-right">售價</th>
+				    <th width=60>數量</th>
+				    <th min-width=60 v-if="cart.final_total!==cart.total">折扣價</th>
+				    <th min-width=60 v-else class="text-right">售價</th>
 				  </thead>
 
 				  <tbody>
 				  	<tr v-if="cart.carts.length==0">購物車還沒有東西哦！</tr>
 				    <tr v-for="item in cart.carts">
-				      <td class="align-middle">
+				      <td class="align-middle text-center">
 				        <button type="button" class="btn btn-outline-danger btn-sm" @click="removeCart(item.id)">
 				          <i class="far fa-trash-alt"></i>
 				        </button>
@@ -79,9 +85,9 @@
 				      	<table class="table my-2">
 								  <thead>
 								    <th>商品</th>
-								    <th>數量</th>
-								    <th v-if="cart.final_total!==cart.total">折扣價</th>
-								    <th v-else class="text-right">售價</th>
+								    <th width=60>數量</th>
+								    <th min-width=60 v-if="cart.final_total!==cart.total">折扣價</th>
+								    <th min-width=60 v-else class="text-right">售價</th>
 								  </thead>
 								  <tbody>
 								    <tr v-for="item in cart.carts">
@@ -96,8 +102,7 @@
 								      <td class="text-right text-success">{{ cart.final_total | currency }}</td>
 								    </tr>
 								    <tr>
-								      <td class="text-right text-danger">運費：${{shipping}}</td>
-								      <td class="text-right text-danger">結帳金額</td>
+								      <td colspan="2" class="text-right text-danger">結帳金額 (含運費：${{shipping}})</td>
 								      <td class="text-right text-danger">{{ cart.final_total + shipping | currency }}</td>
 								    </tr>
 								  </tfoot>
@@ -200,12 +205,12 @@
 
 		<!-- button -->
 		<div class="row justify-content-center my-4">
-			<div :class="{'col-md-4':cart.total!==0}">
+			<div :class="{'col-sm-4':cart.total!==0}" class="order-2 order-sm-1 mt-2 mt-sm-0">
 				<router-link class="nav-item text-white" to="/">
       		<button type="button" class="btn btn-info d-block">我要繼續逛</button>
 				</router-link>
 			</div>
-			<div class="col-md-6 d-flex justify-content-end" v-if="cart.total!==0">
+			<div class="col-sm-6 d-flex justify-content-end order-1 order-sm-2" v-if="cart.total!==0">
 				<button type="button" class="btn btn-info d-block mr-2" v-if="step==2" @click="stepChange('prev')">
 					<div class="step-link">上一步</div>
 				</button>
@@ -221,9 +226,11 @@
 </template>
 
 <script>
+import $ from 'jquery';
 export default {
 	data () {
 		return {
+			isLoading: false,
 			step: 1,
 			shipping: 60,
 			cart: {
@@ -253,10 +260,12 @@ export default {
 	methods: {
 		getCart() {
     	const vm = this;
+			vm.isLoading = true;
       const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 
       this.$http.get(url).then((response) => {
       	vm.cart = response.data.data; 
         console.log(response);
+				vm.isLoading = false;
       });
     },
     removeCart(id) {
@@ -326,6 +335,15 @@ export default {
       	}
         console.log(response);
       });
+		},
+		removeAll() {
+			const vm = this;
+			vm.cart.carts.forEach(function(item){
+				let url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart/${item.id}`;
+				vm.$http.delete(url).then((response) => {
+					vm.getCart();
+				});
+			})
 		}
 	},
 	created() {
@@ -355,6 +373,12 @@ export default {
 .step-link, .step-link:hover{
 	text-decoration: none;
 	color:#fff;
+}
+/*-----------------*/
+/*clear button
+/*-----------------*/
+.u-clear{
+	cursor: pointer;
 }
 
 </style>

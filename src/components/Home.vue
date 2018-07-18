@@ -14,6 +14,8 @@
 		    </div>
 		  </div>
 		</nav>
+
+		<!-- cart icon -->
 		<div class="cart-sm">
 			<div class="cart-icon" @click="isShow=!isShow">
 			  	<i class="fas fa-shopping-cart"></i>
@@ -23,16 +25,20 @@
 			 <div class="row justify-content-center bg-light border rounded py-3">
 					<div class="col-md-12">
 						<div class="h5"><b>購物車清單</b></div>
+						<div class="u-close" @click="closeCart()">
+							<span></span>
+							<span></span>
+						</div>
 						<table class="table table-sm my-0">
 						  <tbody>
 						  	<tr v-if="cartNum==0">購物車還沒有東西哦！</tr>
 						    <tr v-for="item in cart.carts">
 						      <td>
-						        <button type="button" class="btn bg-transparent btn-sm" @click="removeCart(item.id)">
+						        <button type="button" class="btn bg-transparent btn-sm d-none d-md-block" @click="removeCart(item.id)">
 						          <i class="far fa-trash-alt"></i>
 						        </button>
 						      </td>
-						      <td class="text-info">{{ item.product.title }}</td>
+						      <td class="text-info u-cart-title">{{ item.product.title }}</td>
 						      <td>{{ item.qty }}{{ item.product.unit }}</td>
 						      <td class="text-right">{{ item.final_total | currency }}</td>
 						    </tr>
@@ -99,6 +105,10 @@ export default {
 				// console.log(response);
 			});
     },
+    closeCart() {
+    	const vm = this;
+    	vm.isShow = false;
+    }
 	},
 	computed: {
 		cartNum() {
@@ -162,6 +172,7 @@ body{
 .fa-shopping-cart{
 	font-size: 36px;
 	color:#000;
+	text-shadow: 2px 2px 5px rgba(256,256,256,0.8);
 }
 .fa-circle{
 	position:absolute;
@@ -173,6 +184,39 @@ body{
 	position: relative;
 	bottom:50px;
 	right:50px;
+}
+@media (max-width:768px){
+	.u-cart-title{
+		max-width:150px;
+		overflow:hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+	.cart-box{
+		right:0;
+	}
+}
+.u-close{
+	position: absolute;
+	top:-5px;
+	right:5px;
+	width:30px;
+	height:30px;
+	cursor:pointer;
+}
+.u-close span{
+	position:absolute;
+	top:50%;
+	left:50%;
+	width:24px;
+	height:2px;
+	background-color: lightgrey;
+}
+.u-close span:first-child{
+	transform: translate(-50%, -50%) rotate(45deg);
+}
+.u-close span:last-child{
+	transform: translate(-50%, -50%) rotate(-45deg);
 }
 /*-----------------*/
 /*footer: social bar
