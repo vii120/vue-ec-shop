@@ -1,11 +1,11 @@
 <template>
 	<div class="container">
 		<loading :active.sync="isLoading"></loading>
-		<div class="row justify-content-center my-4">
+		<div class="row justify-content-center mt-4 mb-0 mb-md-4">
 			<div class="col-md-10">
 				<!-- header -->
 				<h3 class="text-center"><b>購物車清單</b></h3>
-				<div class="row justify-content-center my-4 text-center">
+				<div class="row justify-content-center mt-4 text-center">
 					<div class="col-md-4"><span class="step" :class="{'current-step':step==1}">1. 確認購買清單</span></div>
 					<div class="col-md-4"><span class="step" :class="{'current-step':step==2}">2. 填寫收件資料</span></div>
 					<div class="col-md-4"><span class="step" :class="{'current-step':step==3}">3. 完成訂單！</span></div>
@@ -13,7 +13,7 @@
 			</div>
 		</div>
 		<!-- step1: shopping list -->
-		<div class="row justify-content-center mt-4 mb-4" v-if="step==1">
+		<div class="row justify-content-center mb-4" v-if="step==1">
 			<div class="col-md-10">
 				<table class="table mt-4">
 				  <thead>
@@ -205,21 +205,20 @@
 
 		<!-- button -->
 		<div class="row justify-content-center my-4">
-			<div :class="{'col-sm-4':cart.total!==0}" class="order-2 order-sm-1 mt-2 mt-sm-0">
-				<router-link class="nav-item text-white" to="/">
-      		<button type="button" class="btn btn-info d-block">我要繼續逛</button>
-				</router-link>
-			</div>
-			<div class="col-sm-6 d-flex justify-content-end order-1 order-sm-2" v-if="cart.total!==0">
+			
+			<div class="col-md-6 order-md-2 u-orderbtn-step" v-if="cart.total!==0">
 				<button type="button" class="btn btn-info d-block mr-2" v-if="step==2" @click="stepChange('prev')">
-					<div class="step-link">上一步</div>
+					上一步
 				</button>
 				<button type="button" class="btn btn-info d-block" v-if="step==1" @click="stepChange()">
-					<div class="step-link">下一步：填寫收件資料</div>
+					下一步：填寫收件資料
 				</button>
 				<button type="button" class="btn btn-danger d-block" v-if="step==2" @click="createOrder()">
-					<div class="step-link">下一步：完成訂單！</div>
+					下一步：完成訂單！
 				</button>
+			</div>
+			<div :class="{'col-md-4':cart.total!==0}" class="order-md-1 u-orderbtn-shop">
+				<router-link class="nav-item btn btn-outline-info d-inline-block" to="/"><< 我要繼續逛</router-link>
 			</div>
 		</div>
 	</div>
@@ -266,6 +265,7 @@ export default {
       	vm.cart = response.data.data; 
         console.log(response);
 				vm.isLoading = false;
+				this.$emit( 'inCart');
       });
     },
     removeCart(id) {
@@ -356,12 +356,16 @@ export default {
 /*-----------------*/
 /*step description
 /*-----------------*/
-.step {
+.step{
+	display:inline-block;
 	color:#b1b1b1;
 	font-weight: bold;
 	border-bottom:3px solid;
 	border-color:transparent;
 	padding-bottom: 2px;
+}
+@media (max-width:768px) {
+	.step{margin-bottom: 5px;}
 }
 .current-step{
 	color:#000;
@@ -370,10 +374,21 @@ export default {
 /*-----------------*/
 /*step button
 /*-----------------*/
-.step-link, .step-link:hover{
-	text-decoration: none;
-	color:#fff;
+.u-orderbtn-step{
+	display: flex;
+	justify-content: flex-end;
 }
+.u-orderbtn-shop{
+	text-align: center;
+	margin-top:36px;
+}
+@media (min-width:768px) {
+	.u-orderbtn-shop{
+		text-align: left;
+		margin-top:0px;
+	}
+}
+
 /*-----------------*/
 /*clear button
 /*-----------------*/

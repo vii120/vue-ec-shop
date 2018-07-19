@@ -33,7 +33,7 @@
 			</div>
 		</div>
 		<!-- product section -->
-		<router-view></router-view>
+		<router-view @inCart="$emit('inCart')"></router-view>
 
 	</div>
 </template>

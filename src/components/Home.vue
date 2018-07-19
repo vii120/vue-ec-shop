@@ -14,12 +14,11 @@
 		    </div>
 		  </div>
 		</nav>
-
 		<!-- cart icon -->
 		<div class="cart-sm">
 			<div class="cart-icon" @click="isShow=!isShow">
 			  	<i class="fas fa-shopping-cart"></i>
-			  	<i class="fas fa-circle" v-if="cartNum!==0"></i>
+			  	<i class="fas fa-circle" v-if="cart.carts.length!==0"></i>
 			</div>
 			<div class="cart-box" v-if="isShow">
 			 <div class="row justify-content-center bg-light border rounded py-3">
@@ -31,7 +30,7 @@
 						</div>
 						<table class="table table-sm my-0">
 						  <tbody>
-						  	<tr v-if="cartNum==0">購物車還沒有東西哦！</tr>
+						  	<tr v-if="cart.carts.length==0">購物車還沒有東西哦！</tr>
 						    <tr v-for="item in cart.carts">
 						      <td>
 						        <button type="button" class="btn bg-transparent btn-sm d-none d-md-block" @click="removeCart(item.id)">
@@ -45,19 +44,19 @@
 						  </tbody>
 						</table>
 						<!-- button -->
-						<router-link class="nav-item text-white" to="/createOrder" v-if="cartNum!==0">
+						<router-link class="nav-item text-white" to="/createOrder" v-if="cart.carts.length!==0">
 							<button type="button" class="btn btn-danger d-block mx-auto w-100" 
 							@click="isShow=!isShow">結帳去</button>
 						</router-link>
 						<button type="button" class="btn btn-danger d-block text-white mx-auto w-100 mt-2" 
-						v-if="cartNum==0" @click="isShow=!isShow">繼續購物</button>
+						v-if="cart.carts.length==0" @click="isShow=!isShow">繼續購物</button>
 					</div>
 				</div>
 			</div>
 		</div>
-			
+
 		<!-- shop -->
-		<router-view></router-view>
+		<router-view @inCart="getCart()"></router-view>
 
 		<!-- footer -->
 		<footer class="bg-light py-4 text-center">
@@ -70,7 +69,7 @@
 		  	<a href="#" class="nav-item text-dark"><i class="fab fa-google-plus-square"></i></a>
 		  	<a href="#" class="nav-item text-dark"><i class="fab fa-twitter-square"></i></a>
 		  </div>
-		  <div>ⓒ 2018 vue EC shop by Vivi Tseng</div>
+		  <div>ⓒ 2018 vue ec shop by Vivi Tseng</div>
 			</div>
 		</footer>
 	</div>
@@ -84,8 +83,6 @@ export default {
 				carts: [],
 			},
 			isShow: false,
-			cartW: '',
-			cartH: '',
 		}
 	},
 	methods: {
@@ -94,7 +91,7 @@ export default {
       const api = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 
       this.$http.get(api).then((response) => {
       	vm.cart = response.data.data;
-        // console.log(response);
+        // console.log(response.data.data.carts);
       });
     },
     removeCart(id) {
@@ -110,18 +107,14 @@ export default {
     	vm.isShow = false;
     }
 	},
-	computed: {
-		cartNum() {
-    	const vm = this;
-    	vm.getCart();
-      return vm.cart.carts.length;
-    },
-	},
 	created() {
 		this.getCart();
 	},
 }
+
 </script>
+
+
 
 <style>
 /*-----------------*/

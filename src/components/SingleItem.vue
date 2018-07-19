@@ -116,17 +116,21 @@ export default {
     	}
     },
     addtoCart(id, qty = 1){
-    	const vm = this;
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 
-      const cart = {
-      	product_id: id,
-      	qty
-      }
-      this.$http.post(api, {data: cart}).then((response) => {
-        console.log(response);
-        vm.getCart();
-      });
-      alert("已加入購物車！");
+    	if (qty==0){
+    		alert("請選擇商品數量");
+    	} else {
+    		const vm = this;
+	      const api = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 
+	      const cart = {
+	      	product_id: id,
+	      	qty
+	      }
+	      this.$http.post(api, {data: cart}).then((response) => {
+	        // console.log(response);
+	        vm.getCart();
+	      });
+	      alert("已加入購物車！");
+    	}
     },
     getCart(){
     	const vm = this;
@@ -135,6 +139,7 @@ export default {
       	vm.cart = response.data.data; 
         console.log(response);
       });
+      this.$emit( 'inCart');
     },
     beforePath() {
 			this.$router.back();

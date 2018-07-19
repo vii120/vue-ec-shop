@@ -93,7 +93,6 @@ export default {
 		return {
 			isLoading: false,
 			products: [],
-			filtProducts: [],
 			selected: '',
 			pagination: {},
 			allPage: false,
@@ -128,16 +127,14 @@ export default {
 	computed: {
 		filtData() {
 			var vm = this;
-			
 			if (vm.selected==''){
-				return vm.products
+				return vm.products;
 			} else {
 				vm.getProducts('all');
 				vm.isLoading = false;
 				return vm.products.filter(function(item){
 					return item.category == vm.selected;
 				})
-
 			}
 		}
 	},
