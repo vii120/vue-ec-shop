@@ -39,11 +39,11 @@ https://vii120.github.io/vue-ec-shop/
 
 ### # 結帳
 
-* 確認購買清單：可刪除商品、輸入折扣代碼
+* 確認購買清單：可刪除單一或全部商品、輸入折扣代碼
 * 填寫收件資料：使用表單驗證功能，上方可查看購買明細，但不可修改
 * 完成訂單：顯示購買明細及收件資料，可點擊按鈕進行付款
 
-![create order](https://i.imgur.com/1Hn37iE.png)
+![create order](https://i.imgur.com/sbhIDph.png)
 
 ## Plug-ins
 * [VueAxios](https://www.npmjs.com/package/vue-axios)
