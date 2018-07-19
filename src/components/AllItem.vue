@@ -16,16 +16,16 @@
 				    @click.prevent="selected=''">全部商品</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#" :class="{'active': selected=='買了變文青'}"
-				    @click.prevent="selected='買了變文青'">文青系列</a>
+				    <a class="nav-link" href="#" :class="{'active': selected=='文青'}"
+				    @click.prevent="selected='文青'">文青系列</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#" :class="{'active': selected=='不要玩食物'}"
-				    @click.prevent="selected='不要玩食物'">吃貨系列</a>
+				    <a class="nav-link" href="#" :class="{'active': selected=='吃貨'}"
+				    @click.prevent="selected='吃貨'">吃貨系列</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#" :class="{'active': selected=='有輪子的'}" 
-				    @click.prevent="selected='有輪子的'">輪子系列</a>
+				    <a class="nav-link" href="#" :class="{'active': selected=='輪子'}" 
+				    @click.prevent="selected='輪子'">輪子系列</a>
 				  </li>
 				</ul>
 				<!-- products -->

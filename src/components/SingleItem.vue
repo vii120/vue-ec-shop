@@ -6,7 +6,7 @@
 		  <ol class="breadcrumb">
 		  	<div class="container d-flex">
 		  		<li class="breadcrumb-item"><router-link to="/">Weird Store</router-link></li>
-			    <li class="breadcrumb-item">{{series(product.category)}}</li>
+			    <li class="breadcrumb-item">{{product.category}}系列</li>
 			    <li class="breadcrumb-item active" aria-current="page">{{product.title}}</li>
 		  	</div>
 			    
@@ -94,14 +94,6 @@ export default {
      		// vm.isLoading = false;
         console.log(vm.product);
       });
-    },
-    series(category) {
-    	switch (category) {
-    		case '買了變文青': return '文青系列'; break;
-    		case '不要玩食物': return '吃貨系列'; break;
-    		case '有輪子的': return '輪子系列'; break;
-    		default: return '全系列'; 
-    	}
     },
     randomImg() {
     	const vm = this;
