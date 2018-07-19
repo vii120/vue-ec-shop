@@ -13,19 +13,19 @@
 				<ul class="nav nav-tabs w-100">
 				  <li class="nav-item">
 				    <a class="nav-link" href="#" :class="{'active': selected==''}"
-				    @click.prevent="selected=''">全部商品</a>
+				    @click.prevent="selected=''; getProducts(1)">全部商品</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link" href="#" :class="{'active': selected=='文青'}"
-				    @click.prevent="selected='文青'">文青系列</a>
+				    @click.prevent="selected='文青'; getProducts('all')">文青系列</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link" href="#" :class="{'active': selected=='吃貨'}"
-				    @click.prevent="selected='吃貨'">吃貨系列</a>
+				    @click.prevent="selected='吃貨'; getProducts('all')">吃貨系列</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link" href="#" :class="{'active': selected=='輪子'}" 
-				    @click.prevent="selected='輪子'">輪子系列</a>
+				    @click.prevent="selected='輪子'; getProducts('all')">輪子系列</a>
 				  </li>
 				</ul>
 				<!-- products -->
@@ -130,8 +130,6 @@ export default {
 			if (vm.selected==''){
 				return vm.products;
 			} else {
-				vm.getProducts('all');
-				vm.isLoading = false;
 				return vm.products.filter(function(item){
 					return item.category == vm.selected;
 				})

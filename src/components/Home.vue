@@ -8,9 +8,15 @@
 		  </button>
 		  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		    <div class="navbar-nav ml-4">
-		    	<router-link class="nav-item nav-link mr-2" to="/">Home</router-link>
-		    	<router-link class="nav-item nav-link mr-2" to="/faq">FAQ</router-link>
-		    	<router-link class="nav-item nav-link mr-2 text-primary" to="/game"><b>Coupon!</b></router-link>
+		    	<div @click="hideMenu()">
+		    		<router-link class="nav-item nav-link mr-2" to="/">Home</router-link>
+		    	</div>
+		    	<div @click="hideMenu()">
+		    		<router-link class="nav-item nav-link mr-2" to="/faq">FAQ</router-link>
+		    	</div>
+		    	<div @click="hideMenu()">
+		    		<router-link class="nav-item nav-link mr-2 text-primary" to="/game">Coupon!</router-link>
+		    	</div>
 		    </div>
 		  </div>
 		</nav>
@@ -76,6 +82,7 @@
 </template>
 
 <script>
+import $ from 'jquery';
 export default {
 	data () {
 		return {
@@ -86,6 +93,9 @@ export default {
 		}
 	},
 	methods: {
+		hideMenu(){
+			$('#navbarNavAltMarkup').collapse('hide');
+		},
 		getCart(){
     	const vm = this;
       const api = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 

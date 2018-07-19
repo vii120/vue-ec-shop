@@ -47,17 +47,18 @@
 				  </tbody>
 				  <tfoot v-if="cart.carts.length!==0">
 				    <tr>
-				      <td colspan="3" class="text-right">總計價格</td>
+				      <td colspan="3" class="text-right">總計金額</td>
 				      <td class="text-right">{{ cart.total | currency }}</td>
 				    </tr>
 				    <tr v-if="cart.final_total!==cart.total">
-				      <td colspan="3" class="text-right text-success">折扣後價格</td>
+				      <td colspan="3" class="text-right text-success">折扣後金額</td>
 				      <td class="text-right text-success">{{ cart.final_total | currency }}</td>
 				    </tr>
 				    <tr>
-				      <td colspan="2" class="text-right text-danger">運費：${{shipping}}</td>
-				      <td class="text-right text-danger">結帳金額</td>
-				      <td class="text-right text-danger">{{ cart.final_total + shipping | currency }}</td>
+				      <td colspan="4" class="text-primary font-weight-bold">
+				      	<i class="fab fa-angellist"></i><i class="fab fa-angellist"></i><i class="fab fa-angellist"></i>
+				      	首次購物享有免運費優惠！
+				      </td>
 				    </tr>
 				  </tfoot>
 				</table>
@@ -97,13 +98,12 @@
 								    </tr>
 								  </tbody>
 								  <tfoot>
-								    <tr v-if="cart.final_total!==cart.total">
-								      <td colspan="2" class="text-right text-success">折扣後價格</td>
-								      <td class="text-right text-success">{{ cart.final_total | currency }}</td>
-								    </tr>
-								    <tr>
-								      <td colspan="2" class="text-right text-danger">結帳金額 (含運費：${{shipping}})</td>
-								      <td class="text-right text-danger">{{ cart.final_total + shipping | currency }}</td>
+								    <tr class="text-danger">
+								      <td colspan="2" class="text-right">
+									      <span v-if="cart.final_total==cart.total">總計金額</span>
+									      <span v-else>折扣後金額</span>
+									    </td>
+								      <td class="text-right">{{ cart.final_total | currency }}</td>
 								    </tr>
 								  </tfoot>
 								</table>
@@ -231,7 +231,6 @@ export default {
 		return {
 			isLoading: false,
 			step: 1,
-			shipping: 60,
 			cart: {
 				carts: []
 			},
