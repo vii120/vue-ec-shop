@@ -3,7 +3,7 @@
 ![home-jumbotron](https://i.imgur.com/IrMGOdv.png)
 
 ## Demo
-https://vii120.github.io/vue-ec-shop/
+https://vii120.github.io/vue-ec-shop/dist/
 
 ## Intro
 
