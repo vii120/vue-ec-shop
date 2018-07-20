@@ -5,6 +5,8 @@
 ## Demo
 https://vii120.github.io/vue-ec-shop/dist/
 
+ *\*註：因購物車為共用，故點進網頁時可能會發生**購物車已經有東西**的狀況*
+
 ## Intro
 
 ### # Home
