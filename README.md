@@ -9,6 +9,8 @@ https://vii120.github.io/vue-ec-shop/dist/
 
 ## Intro
 
+使用vue cli及vue router製作一個可下單的購物網站
+
 ### # Home
 
 * 商品列表
