@@ -119,19 +119,10 @@ export default {
 	      }
 	      this.$http.post(api, {data: cart}).then((response) => {
 	        // console.log(response);
-	        vm.getCart();
+          this.$bus.$emit( 'updateCart');
 	      });
 	      alert("已加入購物車！");
     	}
-    },
-    getCart(){
-    	const vm = this;
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 
-      this.$http.get(api).then((response) => {
-      	vm.cart = response.data.data; 
-        // console.log(response);
-      });
-      this.$bus.$emit( 'updateCart');
     },
     beforePath() {
 			this.$router.back();
