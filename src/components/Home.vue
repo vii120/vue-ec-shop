@@ -62,7 +62,7 @@
 		</div>
 
 		<!-- shop -->
-		<router-view @inCart="getCart()"></router-view>
+		<router-view></router-view>
 
 		<!-- footer -->
 		<footer class="bg-light py-4 text-center">
@@ -119,6 +119,7 @@ export default {
 	},
 	created() {
 		this.getCart();
+		this.$bus.$on('updateCart', this.getCart);
 	},
 }
 
@@ -196,7 +197,7 @@ body{
 		text-overflow: ellipsis;
 	}
 	.cart-box{
-		right:0;
+		right: 8px;
 	}
 }
 .u-close{

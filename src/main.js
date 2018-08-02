@@ -4,14 +4,15 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import currencyFilter from './filters/currency'
+import './bus'
 
 import 'bootstrap'
 import axios from 'axios'  
 import VueAxios from 'vue-axios'  
 import VeeValidate from 'vee-validate'
-import zhTWValidate from 'vee-validate/dist/locale/zh_TW';
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.min.css';
+import zhTWValidate from 'vee-validate/dist/locale/zh_TW'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.min.css'
 
 Vue.config.productionTip = false;
 Vue.filter('currency', currencyFilter); 

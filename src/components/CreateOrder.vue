@@ -262,9 +262,9 @@ export default {
       const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 
       this.$http.get(url).then((response) => {
       	vm.cart = response.data.data; 
-        console.log(response);
+        // console.log(response);
 				vm.isLoading = false;
-				this.$emit( 'inCart');
+				this.$bus.$emit('updateCart');
       });
     },
     removeCart(id) {
@@ -272,7 +272,7 @@ export default {
 			let url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart/${id}`;
 			this.$http.delete(url).then((response) => {
 				vm.getCart();
-				console.log(response);
+				// console.log(response);
 			});
     },
     addCoupon() {
@@ -280,7 +280,7 @@ export default {
       const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/coupon`;
       const coupon = { code: vm.coupon_code }
       this.$http.post(url, {data: coupon}).then((response) => {
-        console.log(response);
+        // console.log(response);
         vm.getCart();
       });
     },
@@ -305,7 +305,8 @@ export default {
       this.$validator.validate().then((result) => {
         if (result) {
           this.$http.post(url, { data: order }).then((response) => {
-            console.log('訂單已建立', response);
+            // console.log('訂單已建立', response);
+            alert('訂單已建立!');
             if (response.data.success){
             	vm.step = 3;
             	vm.orderId = response.data.orderId;
@@ -313,7 +314,8 @@ export default {
             }
           });
         } else {
-          console.log('訂單欄位不完整');
+          // console.log('訂單欄位不完整');
+          alert('訂單欄位不完整');
         }
       });
     },
@@ -322,7 +324,7 @@ export default {
       const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/order/${vm.orderId}`; 
       this.$http.get(url).then((response) => {
       	vm.order = response.data.order;
-        console.log(response);
+        // console.log(response);
       });
 		},
 		payOrder() {
@@ -332,7 +334,7 @@ export default {
       	if (response.data.success) {
       		vm.getOrder();
       	}
-        console.log(response);
+        // console.log(response);
       });
 		},
 		removeAll() {

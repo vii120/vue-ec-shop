@@ -92,7 +92,7 @@ export default {
         vm.product = response.data.product;
         vm.product.num = 0;
      		// vm.isLoading = false;
-        console.log(vm.product);
+        // console.log(vm.product);
       });
     },
     randomImg() {
@@ -129,9 +129,9 @@ export default {
       const api = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 
       this.$http.get(api).then((response) => {
       	vm.cart = response.data.data; 
-        console.log(response);
+        // console.log(response);
       });
-      this.$emit( 'inCart');
+      this.$bus.$emit( 'updateCart');
     },
     beforePath() {
 			this.$router.back();

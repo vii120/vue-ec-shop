@@ -33,7 +33,7 @@
 			</div>
 		</div>
 		<!-- product section -->
-		<router-view @inCart="$emit('inCart')"></router-view>
+		<router-view></router-view>
 
 	</div>
 </template>
@@ -55,7 +55,7 @@ export default {
       const api = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/products`;
       this.$http.get(api).then((response) => {
         vm.products = response.data.products;
-        console.log(vm.products);
+        // console.log(vm.products);
       });
     }
 	},
