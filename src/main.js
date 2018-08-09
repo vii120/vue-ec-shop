@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import currencyFilter from './filters/currency'
-import './bus'
 
 import 'bootstrap'
 import axios from 'axios'  
