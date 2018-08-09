@@ -12,13 +12,13 @@
 				  </ol>
 				  <div class="carousel-inner">
 				    <div class="carousel-item active">
-				      <img class="d-block w-100" src="static/image/pexels-photo-209600.jpeg" alt="First slide">
+				      <img class="d-block w-100" src="static/image/thumb-one.jpeg" alt="First slide">
 				    </div>
 				    <div class="carousel-item">
-				      <img class="d-block w-100" src="static/image/not-hear-1760750_1920.jpg" alt="Second slide">
+				      <img class="d-block w-100" src="static/image/thumb-two.jpg" alt="Second slide">
 				    </div>
 				    <div class="carousel-item">
-				      <img class="d-block w-100" src="static/image/justin-lim-500765-unsplash.jpg" alt="Third slide">
+				      <img class="d-block w-100" src="static/image/thumb-three.jpg" alt="Third slide">
 				    </div>
 				  </div>
 				  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -39,40 +39,9 @@
 </template>
 
 <script>
-import $ from 'jquery';
-
 export default {
 	data() {
-		return {
-			products: [],
-			filtProducts: [],
-			selected: '',
-		}
-	},
-	methods: {
-		getProducts() {
-      const vm = this;
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/products`;
-      this.$http.get(api).then((response) => {
-        vm.products = response.data.products;
-        // console.log(vm.products);
-      });
-    }
-	},
-	computed: {
-		filtData (){
-			var vm = this;
-			if (vm.selected==''){
-				return vm.products
-			} else {
-				return vm.products.filter(function(item){
-					return item.category == vm.selected
-				})
-			}
-		}
-	},
-	mounted() {
-		this.getProducts();
+		return {}
 	}
 }
 </script>
@@ -94,7 +63,7 @@ export default {
 	left:0;
 	width:100%;
 	height:100%;
-	background: url('../../static/image/edgar-chaparro-627143-unsplash.jpg');
+	background: url('../../static/image/thumb-bg.jpg');
 	background-size: cover;
 	-webkit-background-size: cover;
 	background-position: center;

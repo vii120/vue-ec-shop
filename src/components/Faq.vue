@@ -73,7 +73,7 @@ export default {
 
 <style>
 .u-faq-bg{
-	background: url('../../static/image/liana-mikah-456665-unsplash.jpg');	
+	background: url('../../static/image/yellow-wall.jpg');	
 	background-size: cover;
 	-webkit-background-size: cover;
 	background-position: center;

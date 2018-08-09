@@ -1,5 +1,6 @@
 <template>
 	<div class="wrapper">
+    <loading :active.sync="isLoading"></loading>
 		<!-- nav bar -->
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		  <router-link class="nav-item nav-link store-name" to="/">Weird Store</router-link>
@@ -30,14 +31,14 @@
 			 <div class="row justify-content-center bg-light border rounded py-3">
 					<div class="col-md-12">
 						<div class="h5"><b>購物車清單</b></div>
-						<div class="u-close" @click="closeCart()">
+						<div class="u-close" @click="isShow=false">
 							<span></span>
 							<span></span>
 						</div>
 						<table class="table table-sm my-0">
 						  <tbody>
 						  	<tr v-if="cart.carts.length==0">購物車還沒有東西哦！</tr>
-						    <tr v-for="item in cart.carts">
+						    <tr v-for="(item, key) in cart.carts" :key="key">
 						      <td>
 						        <button type="button" class="btn bg-transparent btn-sm d-none d-md-block" @click="removeCart(item.id)">
 						          <i class="far fa-trash-alt"></i>
@@ -68,7 +69,7 @@
 		<footer class="bg-light py-4 text-center">
 			<div class="container">
 		  <router-link class="nav-item nav-link store-name" to="/">Weird Store</router-link>
-		  <div class="h5">#BeingWeird</div>
+		  <div class="h5 text-dark"># Life is too short to be normal. Stay Weird.</div>
 		  <div class="social-bar my-4">
 		  	<a href="#" class="nav-item text-dark"><i class="fab fa-facebook-square"></i></a>
 		  	<a href="#" class="nav-item text-dark"><i class="fab fa-instagram"></i></a>
@@ -82,13 +83,11 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import $ from 'jquery';
 export default {
 	data () {
 		return {
-			cart: {
-				carts: [],
-			},
 			isShow: false,
 		}
 	},
@@ -96,36 +95,19 @@ export default {
 		hideMenu(){
 			$('#navbarNavAltMarkup').collapse('hide');
 		},
-		getCart(){
-    	const vm = this;
-      const api = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 
-      this.$http.get(api).then((response) => {
-      	vm.cart = response.data.data;
-        // console.log(response.data.data.carts);
-      });
-    },
+    ...mapActions(['getCart']),
     removeCart(id) {
-      const vm = this;
-			let url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart/${id}`;
-			this.$http.delete(url).then((response) => {
-				vm.getCart();
-				// console.log(response);
-			});
-    },
-    closeCart() {
-    	const vm = this;
-    	vm.isShow = false;
+      this.$store.dispatch('removeCart', id);
     }
-	},
+  },
+  computed: {
+    ...mapGetters(['cart', 'isLoading'])
+  },
 	created() {
 		this.getCart();
-		this.$bus.$on('updateCart', this.getCart);
 	},
 }
-
 </script>
-
-
 
 <style>
 /*-----------------*/
@@ -153,6 +135,7 @@ body{
   padding: 5px 10px;
   background: -webkit-linear-gradient(45deg, #3A1C71, #D76D77, #FFAF7B);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 @media (max-width:768px){

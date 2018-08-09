@@ -54,7 +54,7 @@
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis repellendus, facilis, culpa itaque atque excepturi quia, explicabo officiis odio enim provident ipsam id dolor eligendi similique minima dicta nihil voluptate.</p>
 					</div>
 					<!-- image -->
-					<div class="text-center mb-2" v-for="url in randomUrl">
+					<div class="text-center mb-2" v-for="(url, key) in randomUrl" :key="key">
 						<img :src="url" :alt="url" class="img-fluid d-block mx-auto">
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
 					</div>
@@ -80,26 +80,24 @@ export default {
 			itemId: '',
 			product: {},
 			randomUrl: [],
-			randomImgNum: 3,
 		}
 	},
 	methods: {
 		getProduct() {
     	const vm = this;
-      const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/product/${vm.itemId}`; 
+      const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/product/${vm.itemId}`;
       vm.isLoading = true;
       this.$http.get(url).then((response) => {
         vm.product = response.data.product;
         vm.product.num = 0;
-     		// vm.isLoading = false;
-        // console.log(vm.product);
+     		vm.isLoading = false;
       });
     },
     randomImg() {
     	const vm = this;
     	const url = 'https://picsum.photos/480/360/?random';
     	vm.isLoading = true;
-    	for (let i=0; i<vm.randomImgNum; i++) {
+    	for (let i=0; i<3; i++) {
     		this.$http.get(url).then((response) => {
     			// vm.randomUrl[i] = response.request.responseURL;  //無法雙向綁定
     			vm.$set(vm.randomUrl, i, response.request.responseURL);
@@ -108,26 +106,12 @@ export default {
     	}
     },
     addtoCart(id, qty = 1){
-    	if (qty==0){
-    		alert("請選擇商品數量");
-    	} else {
-    		const vm = this;
-	      const api = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 
-	      const cart = {
-	      	product_id: id,
-	      	qty
-	      }
-	      this.$http.post(api, {data: cart}).then((response) => {
-	        // console.log(response);
-          this.$bus.$emit( 'updateCart');
-	      });
-	      alert("已加入購物車！");
-    	}
+      this.$store.dispatch('addtoCart', {id, qty});
     },
     beforePath() {
 			this.$router.back();
 		},
-	},
+  },
 	created() {
 		this.itemId = this.$route.params.itemId;
 		// console.log(this.$route.params)

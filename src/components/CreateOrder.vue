@@ -17,8 +17,8 @@
 			<div class="col-md-10">
 				<table class="table mt-4">
 				  <thead>
-				    <th class="text-center" v-if="cart.carts.length!==0">
-				    	<div class="u-clear text-danger" @click="removeAll()">
+				    <th class="text-center" v-if="!cartEmpty">
+				    	<div class="u-clear text-danger" @click="removeAllCart()">
 				    		<i class="far fa-trash-alt mr-1"></i>
 				    		<b class="d-none d-md-inline-block">全部清空</b>
 				    	</div>
@@ -30,8 +30,8 @@
 				  </thead>
 
 				  <tbody>
-				  	<tr v-if="cart.carts.length==0">購物車還沒有東西哦！</tr>
-				    <tr v-for="item in cart.carts">
+				  	<tr v-if="cartEmpty">購物車還沒有東西哦！</tr>
+				    <tr v-for="(item, key) in cart.carts" :key="key">
 				      <td class="align-middle text-center">
 				        <button type="button" class="btn btn-outline-danger btn-sm" @click="removeCart(item.id)">
 				          <i class="far fa-trash-alt"></i>
@@ -45,7 +45,7 @@
 				      <td class="align-middle text-right">{{ item.final_total | currency }}</td>
 				    </tr>
 				  </tbody>
-				  <tfoot v-if="cart.carts.length!==0">
+				  <tfoot v-if="!cartEmpty">
 				    <tr>
 				      <td colspan="3" class="text-right">總計金額</td>
 				      <td class="text-right">{{ cart.total | currency }}</td>
@@ -62,7 +62,7 @@
 				    </tr>
 				  </tfoot>
 				</table>
-				<div class="input-group mb-3 input-group-sm">
+				<div class="input-group mb-3 input-group-sm" v-if="!cartEmpty">
 				  <input type="text" class="form-control py-2 pl-3" placeholder="請輸入優惠碼" v-model="coupon_code">
 				  <div class="input-group-append">
 				    <button class="btn btn-outline-secondary" type="button" @click="addCoupon">套用優惠碼</button>
@@ -91,7 +91,7 @@
 								    <th min-width=60 v-else class="text-right">售價</th>
 								  </thead>
 								  <tbody>
-								    <tr v-for="item in cart.carts">
+								    <tr v-for="(item, key) in cart.carts" :key="key">
 								      <td class="align-middle">{{ item.product.title }}</td>
 								      <td class="align-middle">{{ item.qty }}{{ item.product.unit }}</td>
 								      <td class="align-middle text-right">{{ item.final_total | currency }}</td>
@@ -141,7 +141,7 @@
 		    </div>
 		    <div class="form-group">
 		      <label for="useraddress">留言</label>
-		      <textarea name="" id="" class="form-control" cols="30" rows="10" v-model="form.msg"></textarea>
+		      <textarea name="" id="" class="form-control" cols="30" rows="10" v-model="form.message"></textarea>
 		    </div>
 		  </form>
 		</div>
@@ -218,22 +218,19 @@
 				</button>
 			</div>
 			<div :class="{'col-md-4':cart.total!==0}" class="order-md-1 u-orderbtn-shop">
-				<router-link class="nav-item btn btn-outline-info d-inline-block" to="/"><< 我要繼續逛</router-link>
+				<router-link class="nav-item btn btn-outline-info d-inline-block" to="/"> &lt;&lt; 我要繼續逛</router-link>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import $ from 'jquery';
 export default {
 	data () {
 		return {
-			isLoading: false,
 			step: 1,
-			cart: {
-				carts: []
-			},
 			coupon_code: '',
 			form: {
       	user: {
@@ -242,7 +239,7 @@ export default {
       		tel: '',
       		address: '',
       	},
-      	msg: '',
+      	message: '',
       },
       orderId:'',
 			order: {
@@ -256,33 +253,12 @@ export default {
 		}
 	},
 	methods: {
-		getCart() {
-    	const vm = this;
-			vm.isLoading = true;
-      const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart`; 
-      this.$http.get(url).then((response) => {
-      	vm.cart = response.data.data; 
-        // console.log(response);
-				vm.isLoading = false;
-				this.$bus.$emit('updateCart');
-      });
-    },
+    ...mapActions(['getCart', 'removeAllCart']),
     removeCart(id) {
-      const vm = this;
-			let url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart/${id}`;
-			this.$http.delete(url).then((response) => {
-				vm.getCart();
-				// console.log(response);
-			});
+      this.$store.dispatch('removeCart', id);
     },
     addCoupon() {
-    	const vm = this;
-      const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/coupon`;
-      const coupon = { code: vm.coupon_code }
-      this.$http.post(url, {data: coupon}).then((response) => {
-        // console.log(response);
-        vm.getCart();
-      });
+      this.$store.dispatch('addCoupon', this.coupon_code);
     },
     stepChange(dir) {
     	const vm = this;
@@ -305,17 +281,18 @@ export default {
       this.$validator.validate().then((result) => {
         if (result) {
           this.$http.post(url, { data: order }).then((response) => {
-            // console.log('訂單已建立', response);
-            alert('訂單已建立!');
             if (response.data.success){
             	vm.step = 3;
             	vm.orderId = response.data.orderId;
-            	vm.getOrder();
+              vm.getOrder();
+              vm.$store.dispatch('getCart');
+              alert('訂單已建立!');
+            } else {
+              alert('訂單建立失敗!')
             }
           });
         } else {
-          // console.log('訂單欄位不完整');
-          alert('訂單欄位不完整');
+          alert('訂單欄位不完整')
         }
       });
     },
@@ -324,7 +301,6 @@ export default {
       const url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/order/${vm.orderId}`; 
       this.$http.get(url).then((response) => {
       	vm.order = response.data.order;
-        // console.log(response);
       });
 		},
 		payOrder() {
@@ -334,19 +310,19 @@ export default {
       	if (response.data.success) {
       		vm.getOrder();
       	}
-        // console.log(response);
       });
-		},
-		removeAll() {
-			const vm = this;
-			vm.cart.carts.forEach(function(item){
-				let url = `${process.env.API_PATH}/api/${process.env.CUSTOM_PATH}/cart/${item.id}`;
-				vm.$http.delete(url).then((response) => {
-					vm.getCart();
-				});
-			})
 		}
-	},
+  },
+  computed: {
+    ...mapGetters(['cart', 'isLoading']),
+    cartEmpty(){
+      if (this.cart.carts.length==0){
+        return true
+      } else {
+        return false
+      }
+    }
+  },
 	created() {
     this.getCart();
   },
@@ -389,12 +365,10 @@ export default {
 		margin-top:0px;
 	}
 }
-
 /*-----------------*/
 /*clear button
 /*-----------------*/
 .u-clear{
 	cursor: pointer;
 }
-
 </style>

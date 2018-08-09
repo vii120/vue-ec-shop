@@ -6,7 +6,7 @@
 				<div class="col-md-7 text-center">
 					<div class="box my-4 py-4">
 						<h2>Let's play a weird game!</h2>
-						<img class="img-fluid" src="static/image/delfi-de-la-rua-152121-unsplash.jpg">
+						<img class="img-fluid" src="static/image/pin-map.jpg">
 						<div class="desc">
 							Weird Store的員工眾多且來自世界各地，<br>
 							只要在<span class="text-danger"><b>三次機會內</b></span>猜對了他們的年齡，<br>
@@ -109,7 +109,6 @@ export default {
 		},
 		guessing() {
 			const vm = this;
-			//是否猜對
 			if (vm.times!==0) {
 				if (vm.ageGuess == vm.person.age) {
 					vm.success = true;
@@ -122,7 +121,6 @@ export default {
 					vm.times -= 1;
 				}
 			}
-			
 		},
 	},
 	computed: {
@@ -146,7 +144,7 @@ export default {
 	border-radius: 20px
 }
 .u-game-bg{
-	background: url('../../static/image/christine-roy-343235-unsplash.jpg');
+	background: url('../../static/image/world-map.jpg');
 	background-size: cover;
 	-webkit-background-size: cover;
 	background-position: center;
