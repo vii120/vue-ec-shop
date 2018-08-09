@@ -9,7 +9,7 @@ https://vii120.github.io/vue-ec-shop/dist/
 
 ## Intro
 
-使用vue cli及vue router製作一個可下單的購物網站
+使用vue cli及vue router製作的購物網站，包含商品選購、編輯購物車及結帳功能，亦有小遊戲在內！
 
 ### # Home
 
@@ -49,9 +49,10 @@ https://vii120.github.io/vue-ec-shop/dist/
 
 ![create order](https://i.imgur.com/sbhIDph.png)
 
-## 框架
+## 工具
 
-使用**Bootstrap**作為主要排版與響應式設計的工具
+* CSS框架：使用**Bootstrap**作為主要排版與響應式設計的工具
+* Vue工具：使用**vue cli**、**vue router**及**vuex**製作
 
 ## Plug-ins
 * [VueAxios](https://www.npmjs.com/package/vue-axios)
