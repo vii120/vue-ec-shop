@@ -28,7 +28,7 @@ https://vii120.github.io/vue-ec-shop/dist/
 
 ### # FAQ
 
-其實幫不上忙但也許可以讓你會心一笑的購物指南
+也許可以讓你會心一笑的購物指南
 
 ![faq](https://i.imgur.com/McdKLH9.png)
 
@@ -48,6 +48,10 @@ https://vii120.github.io/vue-ec-shop/dist/
 * 完成訂單：顯示購買明細及收件資料，可點擊按鈕進行付款
 
 ![create order](https://i.imgur.com/sbhIDph.png)
+
+## 框架
+
+使用**Bootstrap**作為主要排版與響應式設計的工具
 
 ## Plug-ins
 * [VueAxios](https://www.npmjs.com/package/vue-axios)
