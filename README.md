@@ -64,3 +64,5 @@ https://vii120.github.io/vue-ec-shop/dist/
 * 商品頁的隨機圖片：[Lorem Picsum](https://picsum.photos/)
 * 遊戲中的隨機個人資料：[Random User](https://randomuser.me/)
 
+## Reference
+六角學院：[Vue 出一個電商網站 ](https://www.udemy.com/vue-hexschool/)
